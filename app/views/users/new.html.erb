@@ -1,0 +1,34 @@
+<% provide(:title, 'Sign up') %>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a>Home</a>
+  <a>About</a>
+  <a>Team</a>
+  <a>Contact</a>
+</div>
+
+<div id="main">
+  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+  <h1>Sign up</h1>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_for(@user)  do |f| %>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+
+        <%= f.label :password_confirmation, "Repeat Password"  %>
+        <%= f .password_field :password_confirmation %>
+
+        <%= f.submit "Sign Up", class: "btn btn-primary" %>
+        <%= link_to "Sign in -->", '#', class: "btn btn-lg btn-success" %>
+      <% end %>
+    </div>
+  </div>
+</div>

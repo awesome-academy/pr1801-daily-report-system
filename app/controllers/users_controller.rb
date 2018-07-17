@@ -7,20 +7,16 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:edit, :update, :show]
 
   def index
-<<<<<<< HEAD
     if current_user.manager?
-      @users = User.same_division
+      @users = User.same_division.load_data.paginate(page: params[:page], per_page: Settings.users.page)
       if params[:q]
         @users = User.same_division.where("name LIKE ? OR email LIKE ? OR division_id LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%" )
       else
         @users
       end
     else
-      @users = User.load_user
+      @users = User.load_data.paginate(page: params[:page], per_page: Settings.users.page)
     end
-=======
-    @users = User.load_data.paginate(page: params[:page], per_page: Settings.users.page)
->>>>>>> 4d8b1f5291e1ee5098dfae45035527bc06a2dbf3
   end
 
   def show

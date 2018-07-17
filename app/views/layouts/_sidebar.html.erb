@@ -4,20 +4,20 @@
   </div>
   <div class="card change-backkgound">
     <div class="card-img-top text-center">
-      <%= image_tag current_user.avatars.url(:thumb),class: "rounded-circle" %>
+      <%= image_tag current_user.avatars.url, class: "rounded-circle change_size_image" %>
     </div>
     <div class="card-body text-center">
-      <a href="<%= following_user_path(@user) %>">
+      <a href="<%#= following_user_path(@user) %>">
         <i class="fa fa-fw fa-plus"></i>
         <strong>
-          <%= @user.following.all.size %>
+          <%#= @user.following.all.size %>
         </strong>
         <%= t("following") %>
       </a><br>
-      <a href="<%= followers_user_path(@user) %>">
+      <a href="<%#= followers_user_path(@user) %>">
         <i class="fa fa-fw fa-rss"></i>
         <strong>
-          <%= @user.followers.all.size %>
+          <%#= @user.followers.all.size %>
         </strong>
         <%= t("followers") %>
       </a><br>

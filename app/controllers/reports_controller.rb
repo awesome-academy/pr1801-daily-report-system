@@ -2,12 +2,25 @@ class ReportsController < ApplicationController
   before_action :logged_in_user, only: [:index, :new, :create, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :find_report, only: [:show, :approve, :reject]
+  before_action :set_current_user
 
   def index
     if current_user.manager?
-      @reports = Report.all.load_data
+      @reports = Report.load_data.same_division
+      if params[:q]
+        @reports = Report.same_division.where("status LIKE ? OR content LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
+        find_status
+      else
+        @reports
+      end
     else
-      @reports = current_user.reports.all.load_data
+      @reports = current_user.reports.load_data
+      if params[:q]
+        @reports = current_user.reports.where("status LIKE ? OR content LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
+        find_status_user
+      else
+        @reports
+      end
     end
   end
 
@@ -84,6 +97,26 @@ class ReportsController < ApplicationController
       render file: "public/404.html", status: :not_found
     else
       render :show
+    end
+  end
+
+  def find_status
+    if params[:q] == "approved"
+      @reports = Report.same_division.where("status = '1'")
+    elsif params[:q] == "rejected"
+      @reports = Report.same_division.where("status = '2'")
+    elsif params[:q] == "pending"
+      @reports = Report.same_division.where("status = '0'")
+    end
+  end
+
+  def find_status_user
+    if params[:q] == "approved"
+      @reports = current_user.reports.where("status = '1'")
+    elsif params[:q] == "rejected"
+      @reports = current_user.reports.where("status = '2'")
+    elsif params[:q] == "pending"
+      @reports = current_user.reports.where("status = '0'")
     end
   end
 end

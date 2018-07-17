@@ -4,10 +4,10 @@ class RequestsController < ApplicationController
 
   def index
     @requests = if current_user.manager?
-                  Request.all
-                else
-                  current_user.requests
-                end
+      Request.all
+    else
+      current_user.requests
+    end
   end
 
   def new
@@ -18,7 +18,7 @@ class RequestsController < ApplicationController
     @request = Request.new request_params
     @request.user = current_user
     if @request.save
-      flash[:success] = t(:notifi)
+      flash[:success] = t("notifi")
       redirect_to requests_path
     else
       render :new
@@ -53,7 +53,7 @@ class RequestsController < ApplicationController
   def find_request
     @request = Request.find_by id: params[:id]
     if @request.nil?
-      flash[:danger] = t("No_Result")
+      flash[:danger] = t("no_result")
       redirect_to requests_path
     end
   end

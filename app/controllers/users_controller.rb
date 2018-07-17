@@ -5,7 +5,22 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :verify_admin, only: [:destroy]
   before_action :find_user, only: [:edit, :update, :show]
+
   def index
+<<<<<<< HEAD
+    if current_user.manager?
+      @users = User.same_division
+      if params[:q]
+        @users = User.same_division.where("name LIKE ? OR email LIKE ? OR division_id LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%" )
+      else
+        @users
+      end
+    else
+      @users = User.load_user
+    end
+=======
+    @users = User.load_data.paginate(page: params[:page], per_page: Settings.users.page)
+>>>>>>> 4d8b1f5291e1ee5098dfae45035527bc06a2dbf3
   end
 
   def show
@@ -17,10 +32,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new user_params
     if @user.save
       log_in @user
-      flash[:success] = t(:notifi)
+      flash[:success] = t("notifi")
       redirect_to @user
     else
       render :new
@@ -32,7 +47,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
+    if @user.update_attributes user_params
       flash[:success] = t("update_user")
       redirect_to @user
     elsif
@@ -44,7 +59,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password,
-     :password_confirmation, :avatars)
+     :password_confirmation,:position_id, :avatars)
   end
 
   def correct_user
@@ -55,7 +70,7 @@ class UsersController < ApplicationController
   def find_user
     @user = User.find_by id: params[:id]
     if @user.nil?
-      flash[:danger] = "No User"
+      flash[:danger] = t("no_user")
       redirect_to current_user
     end
   end

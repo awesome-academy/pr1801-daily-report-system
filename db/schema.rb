@@ -45,11 +45,9 @@ ActiveRecord::Schema.define(version: 20180713112919) do
     t.integer "user_id"
     t.integer "requests_type_id"
     t.integer "status", default: 0
-    t.datetime "check_in"
-    t.datetime "check_out"
-    t.text "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "reason"
     t.date "sign_date"
   end
 

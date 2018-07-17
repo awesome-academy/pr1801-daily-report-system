@@ -13,11 +13,16 @@
     <li>
       <a href="#">Notification</a>
     </li>
+    <% if current_user.manager? %>
     <li>
-        <%= link_to "Skill Manager", new_user_skill_path %>
+      <%= link_to t("division"), users_path %>
+    </li>
+    <% end %>
+    <li>
+      <%= link_to "Skill Manager", new_user_skill_path %>
     </li>
     <li>
-        <%= link_to "Request_day", new_request_path %>
+      <%= link_to "Request_day", new_request_path %>
     </li>
     <% if !current_user.manager? %>
     <li>

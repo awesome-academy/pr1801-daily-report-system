@@ -25,6 +25,15 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: Settings.password.minimum }, allow_nil: true
   enum role: {user: 0, admin: 1, manager: 2}
+
+  scope :same_division, -> {
+    where("users.division_id = ?", User.current.division_id)
+  }
+
+  scope :load_user, -> {
+    where(role: ["user", "manager"])
+  }
+
   # Return the hash digest of the given string
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
@@ -66,4 +75,11 @@ class User < ApplicationRecord
     user
   end
 
+  def self.current
+    Thread.current[:user]
+  end
+
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
 end

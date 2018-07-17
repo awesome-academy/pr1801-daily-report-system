@@ -1,0 +1,21 @@
+<div class="card-deck">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title"><span class="avatars"><%= image_tag user.avatars.thumb.url if user.avatars? %></span></div>
+      <p class="card-text">
+        <div class="row">
+          <li class>
+            <span class="user"><%= user.name.capitalize %></span>
+            <span class="timestamp"><%= t("Division") %> : <%= user.division_id %></span>
+            <span class="timestamp"><%= user.role %></span>
+            <span class="timestamp"><%= t("all_reports") %> : <%= user.reports.count %></span>
+          </li>
+        </div>
+      </p>
+      <br>
+      <div class="card-footer">
+        <span class="btn btn-sm btn-primary fa fa-info pull-right"><%= link_to t("details"), @user %></span>
+      </div>
+    </div>
+  </div>
+</div>

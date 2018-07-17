@@ -5,18 +5,18 @@
       <p class="card-text">
         <div class="row">
           <li class>
-            <span class="user"><%= link_to report.user.name, report.user %></span>
+            <span class="user"><%= link_to report.user.name.capitalize, report.user %></span>
             <% if report.content.present? %>
             <span class="content"><%= truncate(report.content, length: Settings.truncate.length) %></span>
             <% end %>
             <span class="timestamp">
-              <%= t("posted") %> <%= time_ago_in_words(report.created_at) %> <%= t("ago") %>.
+              <%= t("posted") %>: <%= report.created_at.to_date %>.
             </span>
             <span class="timestamp">
-              <%= t("updated") %> <%= time_ago_in_words(report.updated_at) %> <%= t("ago") %>.
+              <%= t("updated") %>: <%= report.updated_at.to_date %>.
             </span>
             <span class="timestamp">
-              <mark><%= report.status %></mark>
+              <%= t("status") %>: <mark><%= report.status %></mark>
             </span>
           </li>
         </div>
@@ -27,7 +27,7 @@
         <%= link_to t("delete"), report, method: :delete, data: { confirm: t("confirm")}, class: "btn btn-sm btn-danger fa fa-remove pull-right" %>
         <% end %>
         <span>
-          <%= link_to "More Details", report, class: "btn btn-sm btn-primary fa fa-info pull-right" %>
+          <%= link_to t("details"), report, class: "btn btn-sm btn-primary fa fa-info pull-right" %>
         </span>
       </div>
     </div>

@@ -5,7 +5,18 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :verify_admin, only: [:destroy]
   before_action :find_user, only: [:edit, :update, :show]
+
   def index
+    if current_user.manager?
+      @users = User.same_division
+      if params[:q]
+        @users = User.same_division.where("name LIKE ? OR email LIKE ? OR division_id LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%" )
+      else
+        @users
+      end
+    else
+      @users = User.load_user
+    end
   end
 
   def show

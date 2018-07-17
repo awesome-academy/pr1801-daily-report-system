@@ -1,7 +1,21 @@
 <% provide(:title, t("All")) %>
-<h1><%= t("All") %></h1>
-<%= will_paginate %>
-<ul class="users">
-  <%= render @users %>
-</ul>
-<%= will_paginate %>
+<div id="content">
+  <%= render "layouts/toggle_sidebar" %>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4">
+        <div class="input-group">
+          <%= form_tag(users_path, :method => "get", id: "search-form", :html => {class: "form"}) do %>
+          <%= text_field_tag :q, params[:q], class: "form-control" %>
+        </div>
+        <span class="input-group-btn"><%= submit_tag "Search",class: "btn btn-default" %></span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% if @users.present? %>
+    <%= render @users %>
+  <% else %>
+    <%= t("nothing") %>
+  <% end %>
+</div>

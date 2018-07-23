@@ -30,9 +30,6 @@ class User < ApplicationRecord
   validates :password, presence: true, length: {minimum: Settings.password.minimum}, allow_nil: true
 
   has_secure_password
-<<<<<<< HEAD
-  validates :password, presence: true, length: { minimum: Settings.password.minimum }, allow_nil: true
-  enum role: {user: 0, admin: 1, manager: 2}
 
   scope :same_division, -> {
     where("users.division_id = ?", User.current.division_id)
@@ -47,8 +44,6 @@ class User < ApplicationRecord
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
-=======
->>>>>>> 4d8b1f5291e1ee5098dfae45035527bc06a2dbf3
 
   before_save {self.email = email.downcase}
 
@@ -78,14 +73,6 @@ class User < ApplicationRecord
     following << other_user
   end
 
-<<<<<<< HEAD
-  def self.current
-    Thread.current[:user]
-  end
-
-  def self.current=(user)
-    Thread.current[:user] = user
-=======
   def unfollow(other_user)
     following.delete(other_user)
   end
@@ -120,6 +107,14 @@ class User < ApplicationRecord
       user
     end
 
+    def current
+      Thread.current[:user]
+    end
+
+    def current=(user)
+      Thread.current[:user] = user
+    end
+
     def import(file)
       error_row = []
       index = 0
@@ -142,6 +137,5 @@ class User < ApplicationRecord
         end
       end
     end
->>>>>>> 4d8b1f5291e1ee5098dfae45035527bc06a2dbf3
   end
 end

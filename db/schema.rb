@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180730075243) do
+ActiveRecord::Schema.define(version: 20180801123651) do
 
   create_table "conversations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "sender_id"
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20180730075243) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.integer "position_id"
+    t.integer "position_id", default: 2
     t.integer "division_id", default: 4
     t.integer "role", default: 0
     t.datetime "created_at", null: false

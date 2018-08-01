@@ -3,6 +3,7 @@ class Report < ApplicationRecord
   validates :user_id, presence: true
   validates :content, presence: true
   validates :reported_at, presence: true
+  validate :check_date
   enum status: {pending: 0, approved: 1, rejected: 2}
 
   scope :load_data, -> {
@@ -23,5 +24,12 @@ class Report < ApplicationRecord
 
   def correct_user? user
     self.user == user
+  end
+
+  private
+  def check_date
+    if reported_at != Time.now
+      errors.add(:reported_at, "must be today")
+    end
   end
 end

@@ -25,7 +25,7 @@
         <%= link_to t("approve_report"), approve_report_path, method: :patch, class: "btn btn-sm btn-success fa fa-check" %>
       </span>
     <% else %>
-    <% unless @report.approved? && current_user.manager? %>
+    <% if !@report.approved? && !current_user.manager? %>
       <% if @report.correct_user? current_user %>
         <span class="pull-right">
           <%= link_to t("edit_report"), edit_report_path, class: "btn btn-sm btn-warning fa fa-edit" %>

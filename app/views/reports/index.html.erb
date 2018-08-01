@@ -6,22 +6,20 @@
       <div class="form-inline">
         <%= form_tag(reports_path, :method => "get", id: "search-form", :html => {class: "form"}) do %>
         <div class="form-group">
+          <%= label_tag :q, t("search_by") %>
           <%= text_field_tag :q, params[:q], placeholder: t("search_by"), class: "form-control" %>
         </div>
-        <%= submit_tag t("search"), class: "btn btn-primary" %>
-        <% end %>
-        <%= form_tag(reports_path, :method => "get", :html => {class: "form"}) do %>
         <div class="form-group">
+          <%= label_tag :d, t("search_date")%>
           <%= date_field_tag :d, params[:d], class: "form-control", size: Settings.text_field.size %>
         </div>
-        <%= submit_tag t("sort"), class: "btn btn-primary" %>
-        <% end %>
-        <%= form_tag(reports_path, :method => "get", :html => {class: "form"}) do %>
         <div class="form-group">
+          <%= label_tag :s, t("search_range") %>
           <%= date_field_tag :s, params[:s], class: "form-control", size: Settings.text_field.size %>
+          <%= label_tag :e, " & " %>
           <%= date_field_tag :e, params[:e], class: "form-control", size: Settings.text_field.size %>
         </div>
-        <%= submit_tag t("sort"), class: "btn btn-primary" %>
+        <%= submit_tag t("search"), class: "btn btn-primary" %>
         <% end %>
       </div>
     </div>

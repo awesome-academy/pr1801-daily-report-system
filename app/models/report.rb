@@ -9,8 +9,8 @@ class Report < ApplicationRecord
     order(updated_at: :desc, status: :asc)
   }
 
-  scope :same_division, -> {
-    joins(:user).where("users.division_id = ?", User.current.division_id)
+  scope :same_division, -> (user) {
+    joins(:user).where("users.division_id = ?", user.division_id)
   }
 
   scope :search_date, -> (search_date) {

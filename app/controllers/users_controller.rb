@@ -8,9 +8,9 @@ class UsersController < ApplicationController
 
   def index
     if current_user.manager?
-      @users = User.same_division.load_data.load_user.paginate(page: params[:page], per_page: Settings.users.page)
+      @users = User.same_division(current_user).load_data.load_user.paginate(page: params[:page], per_page: Settings.users.page)
       if params[:q]
-        @users = User.same_division.where("users.name LIKE ? OR divisions.name LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%").
+        @users = User.same_division(current_user).where("users.name LIKE ? OR divisions.name LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%").
         load_user.paginate(page: params[:page], per_page: Settings.users.page)
       else
         @users

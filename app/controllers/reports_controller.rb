@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
 
   def index
     if current_user.manager?
-      @reports = Report.load_data.same_division
+      @reports = Report.load_data.same_division(current_user)
       if params[:q].present?
         @reports = @reports.joins(:user).where("status LIKE ? OR content LIKE ? OR users.name LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%")
         find_status

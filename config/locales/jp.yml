@@ -97,6 +97,8 @@ jp:
   search: ""
   sort: ""
   search_by: ""
+  search_date: ""
+  search_range: ""
   follow: ""
   unfollow: ""
   conversations: ""

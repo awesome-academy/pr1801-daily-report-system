@@ -23,7 +23,7 @@
       </p>
       <br>
       <div class="card-footer">
-        <% if !current_user.manager? && current_user?(report.user) %>
+        <% if !current_user.manager? && current_user?(report.user) && report.pending? %>
         <%= link_to t("delete"), report, method: :delete, data: { confirm: t("confirm")}, class: "btn btn-sm btn-danger fa fa-remove pull-right" %>
         <% end %>
         <span>

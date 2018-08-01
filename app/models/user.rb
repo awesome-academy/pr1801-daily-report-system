@@ -38,8 +38,8 @@ class User < ApplicationRecord
 
   scope :load_data, -> {select(:id, :avatars, :name, :email, :role, :division_id, :position_id)}
 
-  scope :same_division, -> {
-    joins(:division).where(division_id: User.current.division.id)
+  scope :same_division, ->(user) {
+    joins(:division).where(division_id: user.division.id)
   }
 
   scope :load_user, -> {

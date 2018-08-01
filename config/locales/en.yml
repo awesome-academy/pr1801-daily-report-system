@@ -96,7 +96,7 @@ en:
   file_wrong: "Please check line"
   search: "Search"
   sort: "Sort"
-  search_by: "Search by ..."
+  search_by: "Search by username, content, or status"
   follow: "Follow"
   unfollow: "Unfollow"
   conversations: "Chat"

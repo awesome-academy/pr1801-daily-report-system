@@ -4,16 +4,8 @@ class Request < ApplicationRecord
 
   enum status: {pending: 0, approved: 1, rejected: 2}
 
-  scope :load_data, -> {
-    order(status: :asc, updated_at: :desc)
-  }
-
-  scope :same_division, -> {
-    joins(:user).where("users.division_id = ?", User.current.division_id)
-  }
-
-  scope :search, -> (search_date) {
-    where("created_at = ?", search_date)
+  scope :search_for_date, -> (search_date) {
+    where("updated_at = ?", search_date)
   }
 
   def verify(manager)

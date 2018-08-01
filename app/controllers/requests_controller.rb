@@ -3,20 +3,10 @@ class RequestsController < ApplicationController
   before_action :find_request,only: [:show,:verify,:reject,:edit,:update]
 
   def index
-    @requests = if current_user.manager?
-      Request.all
-      if params[:d].present?
-        @requests = @requests.search(params[:d])
-      else
-        @requests
-      end
+    if current_user.manager?
+      @requests = Request.all
     else
       current_user.requests
-      if params[:d].present?
-        @requests = @requests.search(params[:d])
-      else
-        @requests
-      end
     end
   end
 

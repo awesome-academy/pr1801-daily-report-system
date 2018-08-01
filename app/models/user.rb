@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :reports
 
   belongs_to :division
+  belongs_to :position
 
   validates :name, presence: true, length: {maximum: Settings.name.maximum}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -35,10 +36,10 @@ class User < ApplicationRecord
 
   after_initialize :set_default_role, if: :new_record?
 
-  scope :load_data, -> {select(:id, :avatars, :name, :email, :role,:division_id,:position_id)}
+  scope :load_data, -> {select(:id, :avatars, :name, :email, :role, :division_id, :position_id)}
 
   scope :same_division, -> {
-    where(division_id: User.current.division_id)
+    joins(:division).where(division_id: User.current.division.id)
   }
 
   scope :load_user, -> {

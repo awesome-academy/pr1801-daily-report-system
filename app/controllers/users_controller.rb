@@ -8,16 +8,18 @@ class UsersController < ApplicationController
 
   def index
     if current_user.manager?
-      @users = User.same_division.load_user.load_data.paginate(page: params[:page], per_page: Settings.users.page)
+      @users = User.same_division.load_data.load_user.paginate(page: params[:page], per_page: Settings.users.page)
       if params[:q]
-        @users = User.same_division.where("name LIKE ? OR email LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%").paginate(page: params[:page], per_page: Settings.users.page)
+        @users = User.same_division.where("users.name LIKE ? OR divisions.name LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%").
+        load_user.paginate(page: params[:page], per_page: Settings.users.page)
       else
         @users
       end
     else
       @users = User.load_user.paginate(page: params[:page], per_page: Settings.users.page)
       if params[:q]
-        @users = User.where("name LIKE ? OR email LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%").paginate(page: params[:page], per_page: Settings.users.page)
+        @users = User.joins(:division).where("users.name LIKE ? OR divisions.name LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%").
+        load_user.paginate(page: params[:page], per_page: Settings.users.page)
       else
         @users
       end
